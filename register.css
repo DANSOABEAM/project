@@ -1,0 +1,97 @@
+body{
+   background-image: linear-gradient(rgba(0, 0, 0, 0.382),rgba(0, 0, 0, 0.974)),url(WhatsApp\ Image\ 2024-09-26\ at\ 13.09.52_c57ebbf2.jpg);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: 200%;
+   color: white;
+   
+}
+
+h4{
+    text-align: center;
+    color: green;
+}
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input{
+    color: WHITE;
+    width: 170%;
+    height: 5vh;
+    border: 0px;
+    border-bottom: 1px solid green;
+ background: transparent;
+    margin: 10px;
+}
+
+.container1{
+    margin-right: 20%;
+    margin-top: 5%;
+}
+
+label{
+    margin-left: 6%;
+}
+span{
+   margin-left: 43%;
+   margin-top: 20%;
+}
+
+.btn{
+ background-color: rgba(135, 207, 235, 0.558);
+    color: white;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: rgba(255, 0, 0, 0.222);
+}
+
+h6{
+    margin-left: 5%;
+    margin-top: -2%;
+}
+a{
+    margin-left: auto;
+}
+
+.con{
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#email1,#password{
+    width: 170%;
+}
+
+.con1{
+
+    margin-left: -15%;
+    margin-top: 5%;
+    
+}
+
+#btn1{
+    width: 170%;
+    background-color: rgba(135, 207, 235, 0.489);
+    color: white;
+    cursor: pointer;
+}
+
+#btn1:hover{
+    background-color: rgba(255, 0, 0, 0.228);
+}
+
+span{
+    font-size: 10px;
+    margin-top: 5%;
+}
+#a2{
+    color: white;
+    text-decoration: none;
+    color: red;
+    font-family: cursive;
+}
