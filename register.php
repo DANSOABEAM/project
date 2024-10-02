@@ -1,54 +1,55 @@
 <?php
-// Start the session
+// Start session
 session_start();
 
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "";  // Replace with your database password
-$dbname = "mme_micro_credit";  // Replace with your database name
+$password = "";  // Your database password
+$dbname = "mme_micro_credit";  // Your database name
 
-// Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check the connection
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Process form submission
+// Check if an admin already exists
+$admin_check_query = "SELECT COUNT(*) as admin_count FROM admins";
+$admin_check_result = $conn->query($admin_check_query);
+$row = $admin_check_result->fetch_assoc();
+
+if ($row['admin_count'] > 0) {
+    echo "<h3>Admin account already exists. You cannot register a new admin.</h3>";
+    exit();
+}
+
+// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve the form data
-    $admin_username = $_POST['username'];
-    $admin_email = $_POST['email'];
-    $admin_password = $_POST['password'];
+    // Get form data
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
     // Validate form data
-    if ($admin_password != $confirm_password) {
+    if ($password !== $confirm_password) {
         echo "<p style='color:red;'>Passwords do not match!</p>";
     } else {
         // Hash the password
-        $hashed_password = password_hash($admin_password, PASSWORD_DEFAULT);
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Check if the email already exists
-        $stmt = $conn->prepare("SELECT id FROM admins WHERE email = ?");
-        $stmt->bind_param("s", $admin_email);
-        $stmt->execute();
-        $stmt->store_result();
-        
-        if ($stmt->num_rows > 0) {
-            echo "<h4 style='color:red;'>Email is already registered!</h4>";
+        // Insert into database
+        $stmt = $conn->prepare("INSERT INTO admins (username, email, password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $username, $email, $hashed_password);
+
+        if ($stmt->execute()) {
+            echo "<p style='color:green;'>Admin registered successfully!</p>";
+            header("Location: login.php"); // Redirect to login page after registration
+            exit();
         } else {
-            // Insert the new admin into the database
-            $stmt = $conn->prepare("INSERT INTO admins (username, email, password) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $admin_username, $admin_email, $hashed_password);
-
-            if ($stmt->execute()) {
-                echo "<h4 style='color:green;'>Registration successful!</h4>";
-            } else {
-                echo "<h4 style='color:red;'>Error: " . $stmt->error . "</h4>";
-            }
+            echo "<p style='color:red;'>Error: Could not register admin.</p>";
         }
 
         $stmt->close();
@@ -64,35 +65,28 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Registration</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
- integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
- crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="register.css">
 </head>
 <body>
-    <div class="container">
-    <div class="container1">
-    <h2>Admin Registration   </h2>
-    <form action="" method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br>
+    <div class="con">
+        <div class="con1">
+            <h2>Admin Registration</h2>
+            <form action="" method="POST">
+                <label for="username">Username:</label><br> 
+                <input type="text" id="username" name="username" required><br><br>
 
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
+                <label for="email">Email:</label><br> 
+                <input type="email" id="email" name="email" required><br><br>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+                <label for="password">Password:</label><br> 
+                <input type="password" id="password" name="password" required><br><br>
 
-        <label for="confirm_password">Confirm Password:</label><br>
-        <input type="password" id="confirm_password" name="confirm_password" required>
+                <label for="confirm_password">Confirm Password:</label><br>
+                <input type="password" id="confirm_password" name="confirm_password" required><br><br>
 
-        <input type="submit" value="Register" class="btn"> 
-        <h6>already have an account? <a href="login.php">login</a><h6>
-        <a href="mailto:francisdanso978@gmail.com" id="a2">developer <i class="fas fa-envelope"></i></a>
-    </form>
-  
-</div>
-</div>
-
+                <input type="submit" value="Register" id="btn1">
+            </form>
+        </div>
+    </div>
 </body>
 </html>

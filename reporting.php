@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporting</title>
-   
+   <link rel="stylesheet" href="nav.css">
     <script>
         function showLoading() {
             document.getElementById("loading-animation").style.display = "block";
