@@ -1,8 +1,8 @@
 ul{
-   display: flex;
-   background: transparent;
-padding: 10px;
   
+  display: flex;
+  background: transparent;
+  box-shadow: 1px soli red;
 }
 
 li{

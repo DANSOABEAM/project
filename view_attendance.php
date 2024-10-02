@@ -40,7 +40,7 @@ while ($row = $days_worked_result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Attendance Records</title>
-   
+   <link rel="stylesheet" href="nav.css">
 </head>
 <body>
 
