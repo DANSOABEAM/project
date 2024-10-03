@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 li{
     margin: auto;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
     list-style: none;
 }
 
@@ -166,8 +166,8 @@ a{
 }
 
 li :hover{
-   background-color: rgba(250, 235, 215, 0.513);
-    color: black;
+ 
+    color: white;
 }
     </style>
 </head>

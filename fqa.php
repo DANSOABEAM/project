@@ -12,6 +12,10 @@
             background-color: #f8f9fa;
             font-family: 'Poppins', sans-serif;
             color: #333;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.382),rgba(0, 0, 0, 0.974)),url(WhatsApp\ Image\ 2024-09-26\ at\ 13.09.52_c57ebbf2.jpg);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: 200%;
         }
 
         .container {
@@ -25,8 +29,9 @@
             text-align: center;
             font-size: 1.8rem;
             font-weight: 600;
-            color: #007bff;
+            color: white;
             margin-bottom: 20px;
+            font-family:cursive;
         }
 
         .card {

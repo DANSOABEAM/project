@@ -104,7 +104,7 @@ ul{
    background:transparent;
     display: flex;
    padding: 10px;
-   border-bottom: 1px solid red;
+  
    box-shadow: 0 0 60px black;
   
 }
@@ -123,8 +123,8 @@ a{
 }
 
 li :hover{
-   background-color: rgba(250, 235, 215, 0.513);
-    color: black;
+  
+    color: green;
 }
     </style>
 </head>

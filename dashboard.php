@@ -194,15 +194,17 @@ h2{
 
         <!-- Navigation Links to Important Pages -->
         <div class="links">
-            <a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a><br>
-            <a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a><br>
-            <a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a><br>
-            <a href="view_emplyee.php">View Employees <i class="fas fa-clock"></i></a><br>
-            <a href="reporting.php">View Reports <i class="fas fa-chart-line"></i></a><br>
+            <a href="leave_apply.php">Leave Application<i class="fas fa-calendar-alt"></i> </a><br>
+            <a href="add_employee.php">Add Employee <i class="fas fa-user-plus"></i> </a><br>
+            <a href="attendance .php">Attendance <i class="fas fa-clipboard-list"></i>  </a><br>
+            <a href="view_emplyee.php"><i class="fas fa-users"></i> View Employees </a><br>
+            <a href="reporting.php"><i class="fas fa-chart-line"></i> View Reports</a><br>
             <a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a><br>
-            <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a><br>
+            <a href="payroll.php"><i class="fas fa-money-check-alt"></i> Payroll</a><br>
             <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
             <a href="employee_attendance.php">employee attendance record <i class="fas fa-chart-line"></i></a><br>
+            <a href="fqa.php">FQAs<i class="fas fa-chart-line"></i></a><br>
+
         </div>
     </div>
 
