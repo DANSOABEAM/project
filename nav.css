@@ -3,12 +3,13 @@ ul{
   display: flex;
   background: transparent;
   box-shadow: 1px soli red;
+  box-shadow: 1px solid black;
 }
 
 li{
     margin: auto;
     padding: 15px;
-    font-size: 16px;
+    font-size: 10px;
     list-style: none;
 }
 
