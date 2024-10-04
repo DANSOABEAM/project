@@ -34,10 +34,7 @@ $pending_leave_count = $pending_leave_count_result->fetch_assoc()['count'];
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.382),rgba(0, 0, 0, 0.974)),url(WhatsApp\ Image\ 2024-09-26\ at\ 13.09.52_c57ebbf2.jpg);
-
-            background-repeat:no-repeat;
-            background-size:cover;
+         
 
         }
 
@@ -52,7 +49,7 @@ $pending_leave_count = $pending_leave_count_result->fetch_assoc()['count'];
             text-align: center;
             margin-top: 25px;
             font-size:25px;
-            color: #ffffff;
+            color: #00000;
             animation: bounceIn 1.5s;
         }
 h2{

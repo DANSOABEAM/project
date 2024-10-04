@@ -1,10 +1,6 @@
 body{
-   background-image: linear-gradient(rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.974)),url(WhatsApp\ Image\ 2024-09-26\ at\ 13.09.52_c57ebbf2.jpg);
-   background-repeat: no-repeat;
-   background-position: center;
-   background-size: 200%;
-   color: white;
-   
+ 
+   backdrop-filter: blur(25px);
 }
 
 h4{
@@ -19,12 +15,13 @@ h4{
 
 input{
     color: WHITE;
-    width: 170%;
+    width: 70%;
     height: 5vh;
-    border: 0px;
-    border-bottom: 1px solid green;
+  margin-left: 20%;
+   border: 1px solid white;
  background: transparent;
     margin: 10px;
+    border-radius: 10px;
 }
 
 .container1{
@@ -64,18 +61,20 @@ a{
     align-items: center;
 }
 #email1,#password{
-    width: 170%;
+    width: 70%;
+  
 }
 
 .con1{
-
-    margin-left: -15%;
+    border: 1px solide white;
+    margin-left: 15%;
     margin-top: 5%;
-    
+   
+    width: 50%;
 }
 
 #btn1{
-    width: 170%;
+    width: 70%;
     background-color: rgba(135, 207, 235, 0.489);
     color: white;
     cursor: pointer;

@@ -51,10 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.382),rgba(0, 0, 0, 0.974)),url(WhatsApp\ Image\ 2024-09-26\ at\ 13.09.52_c57ebbf2.jpg);
-            background-repeat: no-repeat;
-            background-size: 200%;
-            color: white;
+            color:black;
+          
         }
 
         .container {
@@ -70,8 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-left: 3%;
             font-size: 24px;
             margin-bottom: 20px;
-            color: #333333;
-            color:white;
+           
         }
 
         .form-group {
@@ -80,14 +77,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         label {
             font-size: 14px;
-            color: white;
+         
             display: block;
             margin-bottom: 5px;
             margin-left: 3%;
         }
 
         select, input[type="date"], button {
-            color: white;
+          
           
     width: 50%;
     height: 5vh;
@@ -107,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         button {
             background-color: #28a745;
-            color: white;
+          
             border: none;
             cursor: pointer;
         }
@@ -134,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         th {
             background-color: #007bff;
-            color: white;
+           
         }
 
         select{
@@ -160,14 +157,14 @@ li{
 }
 
 a{
-    color: white;
+    
     text-decoration: none;
 
 }
 
 li :hover{
  
-    color: white;
+   
 }
     </style>
 </head>

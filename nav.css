@@ -1,9 +1,9 @@
 ul{
   
   display: flex;
-  background: transparent;
+ background-color: red;
   box-shadow: 1px soli red;
- box-shadow: 0 0 10px black;
+ box-shadow: 0 0 5px rgba(128, 0, 128, 0.532);
  padding: 5px;
 }
 

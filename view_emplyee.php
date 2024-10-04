@@ -54,7 +54,7 @@ if (isset($_GET['delete_id'])) {
 
         }
 a{
-    color:white;
+    
 }
         td {
             padding: 10px;
@@ -87,10 +87,7 @@ a{
         }
 
         body{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.382),rgba(0, 0, 0, 0.974)),url(WhatsApp\ Image\ 2024-09-26\ at\ 13.09.52_c57ebbf2.jpg);
-    background-repeat: no-repeat;
-    background-size: 200%;
-    color: white;
+   
 
 }
 th{
@@ -105,7 +102,7 @@ ul{
     display: flex;
    padding: 10px;
   
-   box-shadow: 0 0 60px black;
+   box-shadow: 0 0 10px black;
   
 }
 
@@ -117,7 +114,7 @@ li{
 }
 
 a{
-    color: white;
+   
     text-decoration: none;
 
 }
@@ -187,6 +184,6 @@ li :hover{
         $conn->close();
         ?>
     </table>
-    <span>&copy; DandS Francis Kwakye 2024</SPAN>
+   
 </body>
 </html>
