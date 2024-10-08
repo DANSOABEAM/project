@@ -1,36 +1,128 @@
-table{
- 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+h4 {
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
     width: 100%;
-   
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.2s;
 }
 
-th{
-    background-color: rgb(92, 236, 174);
- 
-    border: 1px solid black;
+.form-control:focus {
+    border-color: #80bdff;
+    outline: none;
 }
-td{
-   
-    text-align: center;
-  
-    margin: 40px;
-    font-size: 15px;
-    
-}
-.btn{
-    background-color: green;
-    border: 0;
-    color: white;
-    cursor: pointer;
 
-}
-.btn2{
-    background-color: red;
-    border: 0;
-    color: white;
-    margin-left: 5%;
+.btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
 }
-body{
-    background-image: url(Screenshot2024-10-02121004.png);
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn2 {
+    margin-left: 10px;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+    background-color: #f1f1f1;
+    color: #495057;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    background: #007bff;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+ul li {
+    display: inline;
+    margin: 0;
+}
+
+ul li a {
+    color: white;
+    padding: 15px 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+ul li a:hover {
+    background-color: #0056b3;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }

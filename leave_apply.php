@@ -61,9 +61,32 @@ $leave_types = ["Sick Leave", "Vacation", "Casual Leave", "Maternity Leave", "Pa
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Management</title>
-    <link rel="stylesheet" href="leave_apply.css">
-    <link rel="stylesheet" href="nav.css">
-   
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            animation: fadeIn 1s;
+        }
+        .spinner {
+            display: none;
+            margin-top: 10px;
+        }
+        .employee-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: none;
+            margin-top: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
     <script>
         function showEmployeeInfo() {
             var select = document.getElementById("employee_id");
@@ -84,6 +107,7 @@ $leave_types = ["Sick Leave", "Vacation", "Casual Leave", "Maternity Leave", "Pa
             img.onload = function() {
                 employeeImage.src = image;
                 spinner.style.display = "none"; // Hide spinner
+                employeeImage.style.display = "block"; // Show employee image
                 employeeInfo.style.display = "block"; // Show employee info
             };
             img.onerror = function() {
@@ -95,89 +119,86 @@ $leave_types = ["Sick Leave", "Vacation", "Casual Leave", "Maternity Leave", "Pa
 </head>
 <body>
 
-<ul>
-    <li>   <a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a></li> 
-    <li>  <a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a></li> 
-    <li> <a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a></li> 
-    <li>   <a href="view_emplyee.php">All Employees <i class="fas fa-clock"></i></a></li> 
-    <li>  <a href="reporting.php"> Reports <i class="fas fa-chart-line"></i></a></li> 
-    <li> <a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a>
-        <li> <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a></li> 
-        <li> <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
-            <li> <a href="employee_attendance.php">employee attendance record <i class="fas fa-chart-line"></i></a><br>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">MME Micro Credit</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="leave_apply.php">Leave Application</a></li>
+            <li class="nav-item"><a class="nav-link" href="add_employee.php">Add Employee</a></li>
+            <li class="nav-item"><a class="nav-link" href="attendance.php">Attendance</a></li>
+            <li class="nav-item"><a class="nav-link" href="view_employee.php">All Employees</a></li>
+            <li class="nav-item"><a class="nav-link" href="reporting.php">Reports</a></li>
+            <li class="nav-item"><a class="nav-link" href="leave.php">Leave Management</a></li>
+            <li class="nav-item"><a class="nav-link" href="payroll.php">Payroll</a></li>
+            <li class="nav-item"><a class="nav-link" href="employee_payroll.php">Employee Payroll</a></li>
+            <li class="nav-item"><a class="nav-link" href="employee_attendance.php">Employee Attendance Record</a></li>
+        </ul>
+    </div>
+</nav>
 
-    </ul>
+<div class="container">
+    <h2 class="text-center">Apply for Employee Leave</h2>
+    <form method="POST" action="">
+        <div class="form-group">
+            <label for="employee_id">Select Employee:</label>
+            <select name="employee_id" id="employee_id" class="form-control" onchange="showEmployeeInfo()" required>
+                <option value="">-- Select Employee --</option>
+                <?php while ($row = $employees->fetch_assoc()): ?>
+                    <option value="<?= $row['id']; ?>" data-image="<?= htmlspecialchars($row['profile_picture']); ?>">
+                        <?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
+        </div>
 
-
-
-
-
-
-
-
-
-
-
-
-   <div class="container">
-   <img src="Screenshot 2024-10-02 121004.png" width="20%"/>
-
-<div class="form-group">
-
-        <form method="POST" action="">
-         
-            <h2 class="text-center">Apply for Employee Leave</h2>
-          
-                <select name="employee_id" id="employee_id" class="form-control" onchange="showEmployeeInfo()" required>
-                    <option value="">-- Select Employee --</option>
-                    <?php while ($row = $employees->fetch_assoc()): ?>
-                        <option value="<?= $row['id']; ?>" data-image="<?= htmlspecialchars($row['profile_picture']); ?>">
-                            <?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-         
-
-            <!-- Employee Info -->
-            <div id="employee_info" class="employee-info">
-                <h5>Employee Information:</h5>
-                <div class="spinner" id="spinner"></div>
-                <img id="employee_image" class="employee-image" src="" alt="Employee Image"> <br>
-           
-                    </div>
-<HR></HR>
-                <div class="one">
-          
-                <label for="leave_type">Leave Type:</label><br> <br>
-                <select name="leave_type" class="form-control" required><br>
-                    <option value="">-- Select Leave Type --</option>
-                    <?php foreach ($leave_types as $type): ?>
-                        <option value="<?= htmlspecialchars($type); ?>"><?= htmlspecialchars($type); ?></option>
-                    <?php endforeach; ?>
-                </select>
-           <br>
-                <label for="start_date">Start Date:</label><br>
-                <input type="date" name="start_date" class="form-control" required><br>
+        <!-- Employee Info -->
+        <div id="employee_info" class="employee-info">
+            <h5>Employee Information:</h5>
+            <div class="spinner-border spinner" role="status" id="spinner">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <img id="employee_image" class="employee-image" src="" alt="Employee Image"> 
+        </div>
         
-         
-                <label for="end_date">End Date:</label><br>
-                <input type="date" name="end_date" class="form-control" required><br>
-         
+        <hr>
         
-                <label for="reason">Reason:</label><br>
-                <textarea name="reason" class="form-control" placeholder="Enter Reason" required></textarea><br>
-                <button type="submit" name="submit_leave" class="btn btn-primary">Submit Leave Request</button>
-                </form>
-                </div>
-                    </div>
+        <div class="form-group">
+            <label for="leave_type">Leave Type:</label>
+            <select name="leave_type" class="form-control" required>
+                <option value="">-- Select Leave Type --</option>
+                <?php foreach ($leave_types as $type): ?>
+                    <option value="<?= htmlspecialchars($type); ?>"><?= htmlspecialchars($type); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
+        <div class="form-group">
+            <label for="start_date">Start Date:</label>
+            <input type="date" name="start_date" class="form-control" required>
+        </div>
 
-               
-           
-        </form>
-                  
- 
-    
+        <div class="form-group">
+            <label for="end_date">End Date:</label>
+            <input type="date" name="end_date" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="reason">Reason:</label>
+            <textarea name="reason" class="form-control" placeholder="Enter Reason" required></textarea>
+        </div>
+
+        <button type="submit" name="submit_leave" class="btn btn-primary">Submit Leave Request</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
 

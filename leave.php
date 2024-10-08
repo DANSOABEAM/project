@@ -60,7 +60,6 @@ if (isset($_SESSION['admin_id'])) {
             JOIN employees e ON lr.employee_id = e.id";
     $leave_requests = $conn->query($sql);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -69,114 +68,122 @@ if (isset($_SESSION['admin_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Management</title>
-    <link rel="stylesheet" href="leave.css">
-    <link rel="stylesheet" href="nav.css">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        h4 {
+            margin-top: 20px;
+        }
+        .table {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<ul>
-    <li>   <a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a></li> 
-    <li>  <a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a></li> 
-    <li> <a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a></li> 
-    <li>   <a href="view_emplyee.php"> Employees <i class="fas fa-clock"></i></a></li> 
-    <li>  <a href="reporting.php"> Reports <i class="fas fa-chart-line"></i></a></li> 
-    <li> <a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a>
-        <li> <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a></li> 
-        <li> <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
-            <li> <a href="employee_attendance.php">employee attendance record <i class="fas fa-chart-line"></i></a><br>
-
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="container">
-
-        <?php if (isset($_SESSION['employee_id'])): ?>
-            <!-- Leave Request Form for Employees -->
-            <h4>Request Leave</h4>
-            <form method="POST" action="">
-                <div class="form-group">
-                    <label for="leave_type">Leave Type:</label>
-                    <select name="leave_type" class="form-control" required>
-                        <option value="">-- Select Leave Type --</option>
-                        <option value="sick">Sick Leave</option>
-                        <option value="vacation">Vacation Leave</option>
-                        <option value="personal">Personal Leave</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="start_date">Start Date:</label>
-                    <input type="date" name="start_date" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="end_date">End Date:</label>
-                    <input type="date" name="end_date" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="reason">Reason:</label>
-                    <textarea name="reason" class="form-control" required></textarea>
-                </div>
-                <button type="submit" name="submit_leave" class="btn btn-primary">Submit Leave Request</button>
-            </form>
-        <?php endif; ?>
-
-        <?php if (isset($_SESSION['admin_id'])): ?>
-            <!-- Leave Requests Table for Admins -->
-            <h4>Leave Requests</h4>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Employee Name</th>
-                        <th>Leave Type</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Reason</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($leave_requests->num_rows > 0): ?>
-                        <?php while($row = $leave_requests->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo $row['id']; ?></td>
-                                <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['leave_type']); ?></td>
-                                <td><?php echo htmlspecialchars($row['start_date']); ?></td>
-                                <td><?php echo htmlspecialchars($row['end_date']); ?></td>
-                                <td><?php echo htmlspecialchars($row['reason']); ?></td>
-                                <td><?php echo htmlspecialchars($row['status']); ?></td>
-                                <td>
-                                    <form method="POST" action="">
-                                        <input type="hidden" name="leave_id" value="<?php echo $row['id']; ?>">
-                                        <button type="submit" name="approve" class="btn btn-success">Approve</button>
-                                        <button type="submit" name="reject" class="btn2 btn-danger">Reject</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="8">No leave requests found</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">MME Micro Credit</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="leave_apply.php">Leave Application</a></li>
+            <li class="nav-item"><a class="nav-link" href="add_employee.php">Add Employee</a></li>
+            <li class="nav-item"><a class="nav-link" href="attendance.php">Attendance</a></li>
+            <li class="nav-item"><a class="nav-link" href="view_employee.php">Employees</a></li>
+            <li class="nav-item"><a class="nav-link" href="reporting.php">Reports</a></li>
+            <li class="nav-item"><a class="nav-link" href="leave.php">Leave Management</a></li>
+            <li class="nav-item"><a class="nav-link" href="payroll.php">Payroll</a></li>
+            <li class="nav-item"><a class="nav-link" href="employee_payroll.php">Employee Payroll</a></li>
+            <li class="nav-item"><a class="nav-link" href="employee_attendance.php">Employee Attendance Record</a></li>
+        </ul>
     </div>
-  
+</nav>
+
+<div class="container">
+
+    <?php if (isset($_SESSION['employee_id'])): ?>
+        <!-- Leave Request Form for Employees -->
+        <h4>Request Leave</h4>
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="leave_type">Leave Type:</label>
+                <select name="leave_type" class="form-control" required>
+                    <option value="">-- Select Leave Type --</option>
+                    <option value="sick">Sick Leave</option>
+                    <option value="vacation">Vacation Leave</option>
+                    <option value="personal">Personal Leave</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" name="end_date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="reason">Reason:</label>
+                <textarea name="reason" class="form-control" required></textarea>
+            </div>
+            <button type="submit" name="submit_leave" class="btn btn-primary">Submit Leave Request</button>
+        </form>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['admin_id'])): ?>
+        <!-- Leave Requests Table for Admins -->
+        <h4>Leave Requests</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee Name</th>
+                    <th>Leave Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($leave_requests->num_rows > 0): ?>
+                    <?php while($row = $leave_requests->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['leave_type']); ?></td>
+                            <td><?php echo htmlspecialchars($row['start_date']); ?></td>
+                            <td><?php echo htmlspecialchars($row['end_date']); ?></td>
+                            <td><?php echo htmlspecialchars($row['reason']); ?></td>
+                            <td><?php echo htmlspecialchars($row['status']); ?></td>
+                            <td>
+                                <form method="POST" action="">
+                                    <input type="hidden" name="leave_id" value="<?php echo $row['id']; ?>">
+                                    <button type="submit" name="approve" class="btn btn-success">Approve</button>
+                                    <button type="submit" name="reject" class="btn btn-danger">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="8">No leave requests found</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 
