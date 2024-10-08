@@ -3,21 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="nav.css">
+    <title>Responsive Navbar with Sidebar</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        /* Navbar styles for larger screens */
+        .navbar-custom {
+            background-color: #343a40;
+        }
+        .navbar-custom a {
+            color: #fff !important;
+        }
+        
+        /* Sidebar styles for small screens */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            padding-top: 20px;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #575d63;
+            color: #fff;
+        }
+        .sidebar-hidden {
+            width: 0;
+            overflow: hidden;
+        }
+        
+        /* Content */
+        .content {
+            padding: 15px;
+        }
+
+        /* Sidebar toggle button (only visible on small screens) */
+        .navbar-toggler {
+            display: none;
+        }
+
+        /* Media queries to handle sidebar visibility */
+        @media (max-width: 768px) {
+            .navbar-toggler {
+                display: block;
+                color: #fff;
+            }
+            .sidebar {
+                width: 0;
+            }
+            .sidebar-open {
+                width: 250px;
+            }
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <ul>
-    <li>   <a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a></li> 
-    <li>  <a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a></li> 
-    <li> <a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a></li> 
-    <li>   <a href="view_emplyee.php">View Employees <i class="fas fa-clock"></i></a></li> 
-    <li>  <a href="reporting.php">View Reports <i class="fas fa-chart-line"></i></a></li> 
-    <li> <a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a>
-        <li> <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a></li> 
-        <li> <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
-            <li> <a href="employee_attendance.php">employee attendance record <i class="fas fa-chart-line"></i></a><br>
 
-    </ul>
+<!-- Navbar for larger screens -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Dashboard</a>
+        <button class="navbar-toggler" type="button" onclick="toggleSidebar()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="leave_apply.php">Leave Application</a></li>
+                <li class="nav-item"><a class="nav-link" href="add_employee.php">Add Employee</a></li>
+                <li class="nav-item"><a class="nav-link" href="attendance.php">Attendance</a></li>
+                <li class="nav-item"><a class="nav-link" href="view_employee.php">All Employees</a></li>
+                <li class="nav-item"><a class="nav-link" href="reporting.php">Reports</a></li>
+                <li class="nav-item"><a class="nav-link" href="leave.php">Leave Management</a></li>
+                <li class="nav-item"><a class="nav-link" href="payroll.php">Payroll</a></li>
+                <li class="nav-item"><a class="nav-link" href="employee_payroll.php">Employee Payroll</a></li>
+                <li class="nav-item"><a class="nav-link" href="employee_attendance.php">Employee Attendance</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Sidebar for small screens -->
+<div class="sidebar sidebar-hidden" id="sidebar">
+    <a href="leave_apply.php"><i class="fas fa-users"></i> Leave Application</a>
+    <a href="add_employee.php"><i class="fas fa-calendar-alt"></i> Add Employee</a>
+    <a href="attendance.php"><i class="fas fa-money-check-alt"></i> Attendance</a>
+    <a href="view_employee.php"><i class="fas fa-clock"></i> All Employees</a>
+    <a href="reporting.php"><i class="fas fa-chart-line"></i> Reports</a>
+    <a href="leave.php"><i class="fas fa-chart-line"></i> Leave Management</a>
+    <a href="payroll.php"><i class="fas fa-chart-line"></i> Payroll</a>
+    <a href="employee_payroll.php"><i class="fas fa-chart-line"></i> Employee Payroll</a>
+    <a href="employee_attendance.php"><i class="fas fa-chart-line"></i> Employee Attendance</a>
+</div>
+
+<!-- Page content -->
+<div class="content">
+    <h2>Welcome to the Dashboard</h2>
+    <p>Use the navigation menu to explore different sections of the application.</p>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript to toggle the sidebar -->
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar.classList.contains('sidebar-hidden')) {
+            sidebar.classList.remove('sidebar-hidden');
+            sidebar.classList.add('sidebar-open');
+        } else {
+            sidebar.classList.remove('sidebar-open');
+            sidebar.classList.add('sidebar-hidden');
+        }
+    }
+</script>
+
 </body>
 </html>

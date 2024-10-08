@@ -99,8 +99,8 @@ $leave_types = ["Sick Leave", "Vacation", "Casual Leave", "Maternity Leave", "Pa
     <li>   <a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a></li> 
     <li>  <a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a></li> 
     <li> <a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a></li> 
-    <li>   <a href="view_emplyee.php">View Employees <i class="fas fa-clock"></i></a></li> 
-    <li>  <a href="reporting.php">View Reports <i class="fas fa-chart-line"></i></a></li> 
+    <li>   <a href="view_emplyee.php">All Employees <i class="fas fa-clock"></i></a></li> 
+    <li>  <a href="reporting.php"> Reports <i class="fas fa-chart-line"></i></a></li> 
     <li> <a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a>
         <li> <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a></li> 
         <li> <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
@@ -120,6 +120,8 @@ $leave_types = ["Sick Leave", "Vacation", "Casual Leave", "Maternity Leave", "Pa
 
 
    <div class="container">
+   <img src="Screenshot 2024-10-02 121004.png" width="20%"/>
+
 <div class="form-group">
 
         <form method="POST" action="">

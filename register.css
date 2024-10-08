@@ -29,9 +29,7 @@ input{
     margin-top: 5%;
 }
 
-label{
-    margin-left: 6%;
-}
+
 span{
    margin-left: 43%;
    margin-top: 20%;
@@ -66,18 +64,24 @@ a{
 }
 
 .con1{
+    background-image: url(IMG-20221103-WA0008.jpg);
     border: 1px solide white;
-    margin-left: 15%;
-    margin-top: 5%;
    
-    width: 50%;
+    margin-top: 10%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(25px);
+   
+   
+    width: 45%;
 }
 
 #btn1{
     width: 70%;
-    background-color: rgba(135, 207, 235, 0.489);
     color: white;
     cursor: pointer;
+    background: transparent;
+    border: 1px solid white;
 }
 
 #btn1:hover{

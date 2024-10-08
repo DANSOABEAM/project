@@ -68,15 +68,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <link rel="stylesheet" href="leave.css">
       <link rel="stylesheet" href="nav.css">
 
-
+<style>
+.container{
+   display:flex;
+   align-items:centre;
+  
+   justify-content:centre;
+}
+.form-group{
+   
+    width:250%;
+    margin-left:20%;
+    margin:7px;
+}
+img{
+    width:30%;
+    margin-left:5%;
+}
+.form-control{
+    width:110%;
+    margin-left:30%;
+    
+}
+.btn{
+    width:70%;
+    margin-left:80%;
+}
+table{
+    width:100%;
+}
+</style>
 </head>
 <body>
 <ul>
     <li>   <a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a></li> 
     <li>  <a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a></li> 
     <li> <a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a></li> 
-    <li>   <a href="view_emplyee.php">View Employees <i class="fas fa-clock"></i></a></li> 
-    <li>  <a href="reporting.php">View Reports <i class="fas fa-chart-line"></i></a></li> 
+    <li>   <a href="view_emplyee.php">All Employees <i class="fas fa-clock"></i></a></li> 
+    <li>  <a href="reporting.php"> Reports <i class="fas fa-chart-line"></i></a></li> 
     <li> <a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a>
         <li> <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a></li> 
         <li> <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
@@ -86,11 +115,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <div class="container">
-    <h2>Generate Reports</h2>
+<img src="Screenshot 2024-10-02 121004.png" width="50%"/>
+
+   
 
     <!-- Report Filters Form -->
     <form method="POST" action="" onsubmit="showLoading()">
         <div class="form-group">
+        <h2>Generate Reports</h2>
             <label for="report_type">Report Type:</label><br><br>
             <select name="report_type" id="report_type" class="form-control" required><br><br>
                 <option value="attendance">Attendance Report</option>
@@ -111,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <button type="submit" class="btn btn-primary">Generate Report</button>
     </form>
-
+    </div>
    
 
     <!-- Report Table -->
@@ -164,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p>No records found for the selected report type and date range.</p>
     <?php endif; ?>
 
-</div>
+
 
 </body>
 </html>

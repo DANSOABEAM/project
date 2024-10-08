@@ -73,6 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .form-group {
             margin-bottom: 15px;
+            margin-left:50%;
+            width:150%;
+          
+            color:black;
+        }
+        img{
+            margin-left:-10%;
         }
 
         label {
@@ -80,13 +87,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          
             display: block;
             margin-bottom: 5px;
-            margin-left: 3%;
+            margin-left: 2%;
         }
 
         select, input[type="date"], button {
           
-          
-    width: 50%;
+   
+    width: 80%;
     height: 5vh;
     margin-left: 15%;
     border-left: 0;
@@ -115,9 +122,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /* Table Styling */
         table {
-            width: 100%;
+            width: 90%;
             border-collapse: collapse;
             margin-top: 20px;
+            margin-left:5%;
         }
 
         table, th, td {
@@ -140,11 +148,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         ul{
-    background-color: transparent;
+            background-color: red;
+            box-shadow: 0 0 5px rgba(128, 0, 128, 0.532);
     display: flex;
    padding: 10px;
    
-  box-shadow: 0 0 60px black;
+  
  
   
 }
@@ -157,7 +166,7 @@ li{
 }
 
 a{
-    
+    color:white;
     text-decoration: none;
 
 }
@@ -166,6 +175,18 @@ li :hover{
  
    
 }
+button{
+    color:white;
+    margin-left:55%;
+    width:40%;
+}
+.container{
+    display:flex;
+}
+h3{
+    margin-left:30%;
+    font-size:15px;
+}
     </style>
 </head>
 <body>
@@ -173,8 +194,8 @@ li :hover{
     <li>   <a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a></li> 
     <li>  <a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a></li> 
     <li> <a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a></li> 
-    <li>   <a href="view_emplyee.php">View Employees <i class="fas fa-clock"></i></a></li> 
-    <li>  <a href="reporting.php">View Reports <i class="fas fa-chart-line"></i></a></li> 
+    <li>   <a href="view_emplyee.php">All Employees <i class="fas fa-clock"></i></a></li> 
+    <li>  <a href="reporting.php"> Reports <i class="fas fa-chart-line"></i></a></li> 
     <li> <a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a>
         <li> <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a></li> 
         <li> <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
@@ -187,10 +208,13 @@ li :hover{
 
 
 <div class="container">
-    <h2>Employee Attendance Report</h2>
+<img src="Screenshot 2024-10-02 121004.png" width="40%" hight="40px"/>
+
+  
 
     <form method="POST" action="" class="fade-in">
         <div class="form-group">
+        <h2>Employee Attendance Report</h2>
             <label for="employee_id">Select Employee:</label>
             <select name="employee_id" id="employee_id" required>
                 <option value="">-- Select an Employee --</option>
@@ -214,7 +238,7 @@ li :hover{
 
         <button type="submit">View Attendance</button>
     </form>
-
+    </div>
     <?php if ($attendance_result && $attendance_result->num_rows > 0): ?>
         <h3>Attendance Records for <?= htmlspecialchars($employee_name); ?></h3>
         <table class="fade-in">
@@ -238,7 +262,14 @@ li :hover{
     <?php elseif ($attendance_result): ?>
         <p>No attendance records found for this employee within the selected date range.</p>
     <?php endif; ?>
-</div>
+
+
+    <script>
+        document.querySelector('button').addEventListener('click', up);
+        function up (){
+            document.querySelector('body').style.transform = translate('20px')
+        }
+    </script>
 
 </body>
 </html>

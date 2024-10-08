@@ -1,27 +1,20 @@
 ul{
-  
-  display: flex;
- background-color: red;
-  box-shadow: 1px soli red;
- box-shadow: 0 0 5px rgba(128, 0, 128, 0.532);
- padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    box-shadow: 10px red;
+    padding: 10px;
 }
 
 li{
+    font-size: 13px;
     margin: auto;
-    padding: 15px;
-    font-size: 14px;
+    padding: 5px;
     list-style: none;
 }
-
 a{
-   
     text-decoration: none;
     color: white;
-
-}
-
-li :hover{
-  
-    color: green;
+    font-size: 13px;
 }

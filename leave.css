@@ -12,10 +12,10 @@ th{
 td{
    
     text-align: center;
-    border: 1px solid black;
+  
     margin: 40px;
     font-size: 15px;
-    color: white;
+    
 }
 .btn{
     background-color: green;
@@ -30,4 +30,7 @@ td{
     color: white;
     margin-left: 5%;
     cursor: pointer;
+}
+body{
+    background-image: url(Screenshot2024-10-02121004.png);
 }

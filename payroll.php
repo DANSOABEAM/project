@@ -71,21 +71,39 @@ $employees = $conn->query("SELECT id, first_name, last_name, profile_picture FRO
             }, 500); // Adjust the delay as needed
         }
     </script>
-    <link rel="stylesheet" href="leave_apply.css">
+   
     <link rel="stylesheet" href="nav.css">
+    <style>
+        img{
+            width:10%;
+        }
+        .container{
+            display:flex;
+        }
+
+        .-groupform{
+            background-color:green;
+            max-width:400%;
+            margin-left:40%;
+        }
+        .form-control{
+        max-width:100%;
+    }
+
+    </style>
 </head>
 <body>
 
 <ul>
-    <li>   <a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a></li> 
-    <li>  <a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a></li> 
-    <li> <a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a></li> 
-    <li>   <a href="view_emplyee.php">View Employees <i class="fas fa-clock"></i></a></li> 
-    <li>  <a href="reporting.php">View Reports <i class="fas fa-chart-line"></i></a></li> 
-    <li> <a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a>
-        <li> <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a></li> 
-        <li> <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
-            <li> <a href="employee_attendance.php">employee attendance record <i class="fas fa-chart-line"></i></a><br>
+    <li><a href="leave_apply.php">Leave Application <i class="fas fa-users"></i></a></li> 
+    <li><a href="add_employee.php">Add Employee <i class="fas fa-calendar-alt"></i></a></li> 
+    <li><a href="attendance .php">Attendance <i class="fas fa-money-check-alt"></i></a></li> 
+    <li><a href="view_emplyee.php">All Employees <i class="fas fa-clock"></i></a></li> 
+    <li><a href="reporting.php">Reports <i class="fas fa-chart-line"></i></a></li> 
+    <li><a href="leave.php">Leave Management <i class="fas fa-chart-line"></i></a>
+    <li> <a href="payroll.php">Payroll <i class="fas fa-chart-line"></i></a></li> 
+    <li> <a href="employee_payroll.php">Employee Payroll <i class="fas fa-chart-line"></i></a><br>
+    <li> <a href="employee_attendance.php">employee attendance record <i class="fas fa-chart-line"></i></a><br>
 
     </ul>
 
@@ -102,11 +120,13 @@ $employees = $conn->query("SELECT id, first_name, last_name, profile_picture FRO
 
 
     <div class="container">
-        <h2 class="text-center">Payroll Management</h2>
+        <img src="Screenshot 2024-10-02 121004.png" width="40%" class="pic"/>
+       
 
         <!-- Payroll Entry Form -->
         <form method="POST" action="">
-            <div class="form-group">
+            <div class="-groupform">
+            <h2 class="text-center">Payroll Management</h2>
            
                 <select name="employee_id" id="employee_id" class="form-control" onchange="showEmployeeInfo()" required>
                     <option value="">-- Select Employee --</option>
@@ -118,7 +138,7 @@ $employees = $conn->query("SELECT id, first_name, last_name, profile_picture FRO
                         </option>
                     <?php endwhile; ?>
                 </select>
-            </div>
+          
 
             <!-- Employee Info -->
             <div id="employee_info" class="employee-info">
@@ -136,32 +156,31 @@ $employees = $conn->query("SELECT id, first_name, last_name, profile_picture FRO
             </div>
 
             <div class="form-group">
-                <label for="salary">Salary:</label>
-                <input type="number" name="salary" class="form-control" placeholder="Enter Salary" required>
+                <label for="salary">Salary:</label> <br>
+                <input type="number" name="salary" class="form-control" placeholder="Enter Salary" required> <br>
             </div>
             <div class="form-group">
-                <label for="bonus">Bonus:</label>
-                <input type="number" name="bonus" class="form-control" placeholder="Enter Bonus" required>
+                <label for="bonus">Bonus:</label> <br>
+                <input type="number" name="bonus" class="form-control" placeholder="Enter Bonus" required>  <br>
             </div>
             <div class="form-group">
-                <label for="deductions">Deductions:</label>
-                <input type="number" name="deductions" class="form-control" placeholder="Enter Deductions" required>
+                <label for="deductions">Deductions:</label> <br>
+                <input type="number" name="deductions" class="form-control" placeholder="Enter Deductions" required> <br>
             </div>
             <div class="form-group">
-                <label for="allowances">Allowances:</label>
-                <input type="number" name="allowances" class="form-control" placeholder="Enter Allowances" required>
+                <label for="allowances">Allowances:</label> <br>
+                <input type="number" name="allowances" class="form-control" placeholder="Enter Allowances" required> <br>
             </div>
 
             <!-- Pay Date Input -->
             <div class="form-group">
-                <label for="pay_date">Pay Date:</label>
-                <input type="date" name="pay_date" class="form-control" required>
+                <label for="pay_date">Pay Date:</label> <br>
+                <input type="date" name="pay_date" class="form-control" required> <br>
             </div>
-
-            <button type="submit" name="submit_payroll" class="btn btn-primary">Submit Payroll</button>
+<button type="submit" name="submit_payroll" class="btn btn-primary">Submit Payroll</button>
         </form>
     </div>
-   
+</div>
 </body>
 </html>
 

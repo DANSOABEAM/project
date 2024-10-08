@@ -69,11 +69,11 @@ $conn->close();
         <div class="con1">
     <h2>Admin Login</h2>
     <form action="" method="POST">
-        <label for="email">Email:</label><br> 
-        <input type="email" id="email1" name="email" required><br><br>
+     
+        <input type="email" id="email1" name="email" required placeholder="email"><br><br>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password1" name="password" required><br><br>
+        
+        <input type="password" id="password1" name="password" required placeholder="password"><br><br>
 
         <input type="submit" value="Login" id="btn1">
     </form>
