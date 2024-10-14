@@ -1,6 +1,8 @@
 body{
- 
-   backdrop-filter: blur(25px);
+    background-image:linear-gradient(rgba(0, 0, 0, 0.426),#000000dd), url(IMG-20221103-WA0008.jpg);
+    backdrop-filter: blur(25px);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 h4{
@@ -17,9 +19,9 @@ input{
     color: WHITE;
     width: 70%;
     height: 5vh;
-  margin-left: 20%;
-   border: 1px solid white;
- background: transparent;
+    margin-left: 20%;
+    border: 1px solid white;
+    background: transparent;
     margin: 10px;
     border-radius: 10px;
 }
@@ -31,12 +33,12 @@ input{
 
 
 span{
-   margin-left: 43%;
-   margin-top: 20%;
+    margin-left: 43%;
+    margin-top: 20%;
 }
 
 .btn{
- background-color: rgba(135, 207, 235, 0.558);
+    background-color: rgba(135, 207, 235, 0.558);
     color: white;
     cursor: pointer;
 }
@@ -64,12 +66,11 @@ a{
 }
 
 .con1{
-    background-image: url(IMG-20221103-WA0008.jpg);
+    
     border: 1px solide white;
    
     margin-top: 10%;
-    background-repeat: no-repeat;
-    background-size: cover;
+    
     backdrop-filter: blur(25px);
    
    

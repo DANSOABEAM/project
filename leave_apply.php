@@ -22,6 +22,7 @@ if ($conn->connect_error) {
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_leave'])) {
     $employee_id = $_POST['employee_id'];
+    $request_date = $_POST['request_date'];
     $leave_type = $_POST['leave_type'];
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
@@ -37,8 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_leave'])) {
         echo "<script>alert('This employee already has a leave request overlapping with the selected dates.');</script>";
     } else {
         // Insert into leave_requests table
-        $sql = "INSERT INTO leave_requests (employee_id, leave_type, start_date, end_date, reason) 
-                VALUES ('$employee_id', '$leave_type', '$start_date', '$end_date', '$reason')";
+        $sql = "INSERT INTO leave_requests (employee_id, leave_type,request_date, start_date, end_date, reason) 
+                VALUES ('$employee_id', '$leave_type','$request_date', '$start_date', '$end_date', '$reason')";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Leave request submitted successfully.');</script>";
@@ -116,6 +117,21 @@ $leave_types = ["Sick Leave", "Vacation", "Casual Leave", "Maternity Leave", "Pa
             };
         }
     </script>
+    <style>
+    h2{
+        font-size:15px;
+    }
+    a{
+        font-size:13px;
+    }
+    .btn{
+        font-size:12px;
+    }
+    .form-control{
+        margin-left:0px;
+        margin-right:0px;
+    }
+    </style>
 </head>
 <body>
 
@@ -174,6 +190,16 @@ $leave_types = ["Sick Leave", "Vacation", "Casual Leave", "Maternity Leave", "Pa
                 <?php endforeach; ?>
             </select>
         </div>
+
+        <div class="form-group">
+            <label for="start_date">request date:</label>
+            <input type="date" name="request_date" class="form-control" required>
+        </div>
+
+
+
+
+
 
         <div class="form-group">
             <label for="start_date">Start Date:</label>

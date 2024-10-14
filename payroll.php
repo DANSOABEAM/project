@@ -83,7 +83,7 @@ $employees = $conn->query("SELECT id, first_name, last_name, profile_picture FRO
         }
 
         h2 {
-            font-size: 28px;
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
             margin-bottom: 20px;
@@ -126,6 +126,9 @@ $employees = $conn->query("SELECT id, first_name, last_name, profile_picture FRO
             border: 2px dashed #007bff;
             border-radius: 10px;
             animation: slideIn 0.5s ease;
+        }
+        a{
+            font-size:10px;
         }
 
         @keyframes slideIn {

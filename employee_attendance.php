@@ -16,6 +16,11 @@ if ($conn->connect_error) {
 $employees_sql = "SELECT id, first_name, last_name FROM employees";
 $employees_result = $conn->query($employees_sql);
 
+// Check for errors
+if (!$employees_result) {
+    die("Error fetching employees: " . $conn->error);
+}
+
 // Initialize variables for attendance query
 $attendance_result = null;
 $employee_name = '';
@@ -23,22 +28,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $employee_id = $_POST['employee_id'];
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
+    $status = $_POST['status'];
 
     // Fetch employee name
     $employee_sql = "SELECT first_name, last_name FROM employees WHERE id = '$employee_id'";
     $employee_result = $conn->query($employee_sql);
+
+    // Check for errors
+    if (!$employee_result) {
+        die("Error fetching employee: " . $conn->error);
+    }
+
     $employee_data = $employee_result->fetch_assoc();
-    $employee_name = $employee_data['first_name'] . ' ' . $employee_data['last_name'];
+    if ($employee_data) {
+        $employee_name = $employee_data['first_name'] . ' ' . $employee_data['last_name'];
+    } else {
+        die("Employee not found.");
+    }
 
     // Fetch attendance records for the selected employee within the date range
     $attendance_sql = "SELECT * FROM attendance WHERE employee_id = '$employee_id' 
                        AND date BETWEEN '$start_date' AND '$end_date'";
     $attendance_result = $conn->query($attendance_sql);
+
+    // Check for errors
+    if (!$attendance_result) {
+        die("Error fetching attendance records: " . $conn->error);
+    }
 }
 
 ?>
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -58,23 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         h2 {
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #007bff;
-            color: white;
+            margin-bottom: 15px;
+            font-size:15px;
+            text-align:centre;
+            margin-left:40%;
         }
 
         @media print {
@@ -82,15 +90,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 display: none; /* Hide print button when printing */
             }
         }
+        a{
+            font-size:13px;
+        }
+        .btn{
+            font-size:12px;
+        }
     </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">MME Micro Credit</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link" href="leave_apply.php">Leave Application</a></li>
@@ -105,9 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ul>
     </div>
 </nav>
-
+<hr>
 <div class="container">
-    <h2>Employee Attendance Report</h2>
+    <h2>View Employee Attendance Records</h2>
     <form method="POST" action="" class="mb-4">
         <div class="form-group">
             <label for="employee_id">Select Employee:</label>
@@ -135,101 +146,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <?php if ($attendance_result && $attendance_result->num_rows > 0): ?>
-        <button id="printBtn" class="btn btn-success mb-3">Print Attendance Records</button>
-        <h3>Attendance Records for <?= htmlspecialchars($employee_name); ?></h3>
-        <table class="table table-bordered" id="attendanceTable">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time In</th>
-                    <th>Time Out</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $attendance_result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row['date']); ?></td>
-                        <td><?= htmlspecialchars($row['time_in']); ?></td>
-                        <td><?= htmlspecialchars($row['time_out']); ?></td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+        <!-- Trigger button for modal -->
+        <button id="viewAttendanceBtn" class="btn btn-success mb-3" data-toggle="modal" data-target="#attendanceModal">
+            View Attendance Records
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="attendanceModal" tabindex="-1" role="dialog" aria-labelledby="attendanceModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="attendanceModalLabel">Attendance Records for <?= htmlspecialchars($employee_name); ?></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time In</th>
+                                    <th>Time Out</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $attendance_result->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row['date']); ?></td>
+                                        <td><?= htmlspecialchars($row['time_in']); ?></td>
+                                        <td><?= htmlspecialchars($row['time_out']); ?></td>
+                                        <td><?= htmlspecialchars($row['status']); ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php elseif ($attendance_result): ?>
         <p>No attendance records found for this employee within the selected date range.</p>
     <?php endif; ?>
-</div>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Attendance Records for <?= htmlspecialchars($employee_name); ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time In</th>
-                            <th>Time Out</th>
-                        </tr>
-                    </thead>
-                    <tbody id="modalBody">
-                        <?php if ($attendance_result && $attendance_result->num_rows > 0): ?>
-                            <?php while ($row = $attendance_result->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($row['date']); ?></td>
-                                    <td><?= htmlspecialchars($row['time_in']); ?></td>
-                                    <td><?= htmlspecialchars($row['time_out']); ?></td>
-                                </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="3">No records found.</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="printModalBtn" class="btn btn-primary">Print</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // Show modal on print button click
-    document.getElementById("printBtn").onclick = function() {
-        $('#myModal').modal('show');
-    }
-
-    // Print modal content
-    document.getElementById("printModalBtn").onclick = function() {
-        var printContent = document.getElementById("modalBody").innerHTML;
-        var newWindow = window.open('', '', 'width=600,height=400');
-        newWindow.document.write('<html><head><title>Print Attendance</title>');
-        newWindow.document.write('</head><body>');
-        newWindow.document.write('<h3>Attendance Records for <?= htmlspecialchars($employee_name); ?></h3>');
-        newWindow.document.write('<table border="1" cellpadding="10"><thead><tr><th>Date</th><th>Time In</th><th>Time Out</th></tr></thead><tbody>');
-        newWindow.document.write(printContent);
-        newWindow.document.write('</tbody></table>');
-        newWindow.document.write('</body></html>');
-        newWindow.document.close();
-        newWindow.print();
-    }
+    $(document).ready(function() {
+        // Check if attendance records exist
+        <?php if ($attendance_result && $attendance_result->num_rows > 0): ?>
+            $('#viewAttendanceBtn').on('click', function() {
+                console.log("Opening attendance modal with records."); // Debug message
+            });
+        <?php else: ?>
+            $('#viewAttendanceBtn').hide(); // Hide the button if no records
+            console.log("No attendance records found."); // Debug message
+        <?php endif; ?>
+    });
 </script>
-</body>
-</html>
-
 </body>
 </html>

@@ -1,41 +1,22 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root"; // Update with your database username
-$password = ""; // Update with your database password
-$dbname = "mme_micro_credit"; // Update with your database name
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Connect to the database
+$conn = new mysqli("localhost", "root", "", "your_database_name");
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch all employees for the dropdown
-$employees_sql = "SELECT id, first_name, last_name FROM employees";
-$employees_result = $conn->query($employees_sql);
-
-// Initialize variables for attendance query
-$attendance_result = null;
-$employee_name = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get form data
     $employee_id = $_POST['employee_id'];
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
 
-    // Fetch employee name
-    $employee_sql = "SELECT first_name, last_name FROM employees WHERE id = '$employee_id'";
-    $employee_result = $conn->query($employee_sql);
-    $employee_data = $employee_result->fetch_assoc();
-    $employee_name = $employee_data['first_name'] . ' ' . $employee_data['last_name'];
-
-    // Fetch attendance records for the selected employee within the date range
-    $attendance_sql = "SELECT * FROM attendance WHERE employee_id = '$employee_id' 
-                       AND date BETWEEN '$start_date' AND '$end_date'";
-    $attendance_result = $conn->query($attendance_sql);
+    // Fetch payroll data for the selected employee and date range
+    $query = "SELECT * FROM payroll WHERE employee_id = '$employee_id' AND payroll_date BETWEEN '$start_date' AND '$end_date'";
+    $result = $conn->query($query);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -43,166 +24,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Attendance Report</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
-        }
-
-        .container {
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        @media print {
-            #printBtn {
-                display: none; /* Hide print button when printing */
-            }
-        }
-    </style>
+    <title>Employee Payroll Report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container mt-5">
+        <h2>Employee Payroll Report</h2>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">MME Micro Credit</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="leave_apply.php">Leave Application</a></li>
-            <li class="nav-item"><a class="nav-link" href="add_employee.php">Add Employee</a></li>
-            <li class="nav-item"><a class="nav-link" href="attendance.php">Attendance</a></li>
-            <li class="nav-item"><a class="nav-link" href="view_employee.php">All Employees</a></li>
-            <li class="nav-item"><a class="nav-link" href="reporting.php">Reports</a></li>
-            <li class="nav-item"><a class="nav-link" href="leave.php">Leave Management</a></li>
-            <li class="nav-item"><a class="nav-link" href="payroll.php">Payroll</a></li>
-            <li class="nav-item"><a class="nav-link" href="employee_payroll.php">Employee Payroll</a></li>
-            <li class="nav-item"><a class="nav-link" href="employee_attendance.php">Employee Attendance Record</a></li>
-        </ul>
-    </div>
-</nav>
-
-<div class="container">
-    <h2>Employee Attendance Report</h2>
-    <form method="POST" action="" class="mb-4">
-        <div class="form-group">
-            <label for="employee_id">Select Employee:</label>
-            <select name="employee_id" id="employee_id" class="form-control" required>
-                <option value="">-- Select an Employee --</option>
-                <?php while ($row = $employees_result->fetch_assoc()): ?>
-                    <option value="<?= htmlspecialchars($row['id']); ?>">
-                        <?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?>
-                    </option>
-                <?php endwhile; ?>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="start_date">Start Date:</label>
-            <input type="date" name="start_date" id="start_date" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="end_date">End Date:</label>
-            <input type="date" name="end_date" id="end_date" class="form-control" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">View Attendance</button>
-    </form>
-
-    <?php if ($attendance_result && $attendance_result->num_rows > 0): ?>
-        <button id="viewModalBtn" class="btn btn-success mb-3" data-toggle="modal" data-target="#attendanceModal">View Attendance Records</button>
-    <?php elseif ($attendance_result): ?>
-        <p>No attendance records found for this employee within the selected date range.</p>
-    <?php endif; ?>
-</div>
-
-<!-- Modal -->
-<div id="attendanceModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Attendance Records for <?= htmlspecialchars($employee_name); ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <!-- Form to select employee and date range -->
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="employee_id">Select Employee:</label>
+                <select name="employee_id" id="employee_id" class="form-control" required>
+                    <?php
+                    // Fetch all employees from the database
+                    $employee_query = "SELECT * FROM employees";
+                    $employee_result = $conn->query($employee_query);
+                    while ($employee = $employee_result->fetch_assoc()) {
+                        echo "<option value='" . $employee['employee_id'] . "'>" . $employee['employee_name'] . "</option>";
+                    }
+                    ?>
+                </select>
             </div>
-            <div class="modal-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time In</th>
-                            <th>Time Out</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if ($attendance_result && $attendance_result->num_rows > 0): ?>
-                            <?php while ($row = $attendance_result->fetch_assoc()): ?>
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate Report</button>
+        </form>
+
+        <!-- Payroll report modal -->
+        <?php if (isset($result) && $result->num_rows > 0): ?>
+        <div class="modal" id="payrollModal" style="display:block; background: rgba(0, 0, 0, 0.5);">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Payroll Report</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('payrollModal').style.display='none';">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td><?= htmlspecialchars($row['date']); ?></td>
-                                    <td><?= htmlspecialchars($row['time_in']); ?></td>
-                                    <td><?= htmlspecialchars($row['time_out']); ?></td>
+                                    <th>Payroll ID</th>
+                                    <th>Employee ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
                                 </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="3">No records found.</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="printModalBtn" class="btn btn-primary">Print</button>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo $row['payroll_id']; ?></td>
+                                    <td><?php echo $row['employee_id']; ?></td>
+                                    <td><?php echo $row['payroll_date']; ?></td>
+                                    <td><?php echo $row['amount']; ?></td>
+                                </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="printPayroll()" class="btn btn-success">Print</button>
+                    </div>
+                </div>
             </div>
         </div>
+        <?php elseif (isset($result)): ?>
+            <p>No payroll records found for this employee within the selected date range.</p>
+        <?php endif; ?>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    // Print modal content
-    document.getElementById("printModalBtn").onclick = function() {
-        var printContent = document.querySelector("#attendanceModal .modal-body").innerHTML;
-        var newWindow = window.open('', '', 'width=600,height=400');
-        newWindow.document.write('<html><head><title>Print Attendance</title>');
-        newWindow.document.write('</head><body>');
-        newWindow.document.write('<h3>Attendance Records for <?= htmlspecialchars($employee_name); ?></h3>');
-        newWindow.document.write('<table border="1" cellpadding="10"><thead><tr><th>Date</th><th>Time In</th><th>Time Out</th></tr></thead><tbody>');
-        newWindow.document.write(printContent);
-        newWindow.document.write('</tbody></table>');
-        newWindow.document.write('</body></html>');
-        newWindow.document.close();
-        newWindow.print();
+    <script>
+    function printPayroll() {
+        var printContents = document.querySelector('.modal-body').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload();
     }
-</script>
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -75,10 +75,13 @@ if (isset($_SESSION['admin_id'])) {
             padding: 20px;
         }
         h4 {
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .table {
             margin-top: 20px;
+        }
+        a{
+            font-size:14px;
         }
     </style>
 </head>

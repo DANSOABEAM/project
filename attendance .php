@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Insert the attendance record
         $stmt = $conn->prepare("INSERT INTO attendance (employee_id, date, time_in, time_out, status) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("issss", $employee_id, $attendance_date, $time_in, $time_out, $status);
+        $stmt->bind_param("isssss", $employee_id, $attendance_date, $time_in, $time_out, $status);
 
         if ($stmt->execute()) {
             echo "<div class='alert alert-success text-center'>Attendance marked successfully!</div>";
@@ -258,11 +258,11 @@ $conn->close();
         </div>
         <div class="form-group">
             <label for="time_in">Time In:</label>
-            <input type="time" class="form-control" id="time_in" name="time_in" required>
+            <input type="time" class="form-control" id="time_in" name="time_in" >
         </div>
         <div class="form-group">
             <label for="time_out">Time Out:</label>
-            <input type="time" class="form-control" id="time_out" name="time_out" required>
+            <input type="time" class="form-control" id="time_out" name="time_out" >
         </div>
         <div class="form-group">
             <label for="status">Status:</label>
